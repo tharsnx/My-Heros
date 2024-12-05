@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import styles from "../styles/heros.module.css";
 
 export async function getServerSideProps() {
@@ -15,27 +15,76 @@ export async function getServerSideProps() {
 
 export default function Heros({ heroesstate }) {
   const baseUrl = "https://cdn.cloudflare.steamstatic.com";
+  const [attribute, setAttribute] = useState("");
+  const [name, setName] = useState("");
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleFilterClick = (filter) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      if (attribute === filter) {
+        setAttribute("");
+      } else {
+        setAttribute(filter);
+      }
+    }, 400);
+    console.log("Filter clicked:", filter, "Current attribute:", attribute); // For debugging
+  };
+
+  useEffect(() => {
+    if (isTransitioning) {
+      setTimeout(() => setIsTransitioning(false), 400);
+    }
+  }, [isTransitioning]);
 
   return (
     <>
       <div className={styles.pageContainer}>
+        {/* Title of this page */}
         <h3>CHOOSE YOUR</h3>
         <h1 className={styles.text}>HERO</h1>
-        <h3>
-          With many heroes, you’ll find the perfect match for your playstyle on
-          your way to victory.
-        </h3>
+        <h3>With many heroes, you’ll find the perfect match for your playstyle onyour way to victory.</h3>
 
-        <div className={styles.filter}>dddd</div>
-        <div className={styles.content}>
-          {heroesstate.map((hero) => (
-            <div className={styles.card} key={hero.id}>
-              <div>
-                <img src={`${baseUrl}${hero.img}`} alt={hero.localized_name} />
-                <p>{hero.localized_name}</p>
-              </div>
-            </div>
-          ))}
+        {/* filter bar */}
+        <div className={styles.filter}>
+          <div className={styles.attributeContainer}>
+            <pre>ATTRIBUTE:</pre>
+            <img src="../Image/hero_strength.png" alt="Strength" onClick={() => handleFilterClick("str")}/>
+            <img src="../Image/hero_agility.jpg" alt="Agility" onClick={() => handleFilterClick("agi")}/>
+            <img src="../Image/hero_intelligence.png" alt="Intelligence" onClick={() => handleFilterClick("int")}/>
+            <img src="../Image/hero_universal.png" alt="Universal" onClick={() => handleFilterClick("universal")}/>
+          </div>
+
+          {/*search*/}
+          <div className={styles.search}>
+            <input type="text"
+            placeholder="Search Hero"
+            value={name}
+            onChange={(e) => setName(e.target.value)}></input>
+          </div>
+        </div>
+
+        {/* show card */}
+        <div
+          className={`${styles.content} ${isTransitioning ? styles["fade-out"] : ""}`}>
+          {heroesstate.filter((hero) => {
+            if (attribute && attribute !== "universal" && hero.primary_attr !== attribute) {
+              return false;
+            }
+            if (attribute === "universal" && hero.primary_attr !== "all") {
+              return false;
+            }
+            if (name && !hero.localized_name.toLowerCase().includes(name.toLowerCase())) {
+              return false;
+            }
+            return true;})
+            .map((hero) => (
+              <div className={styles.card} key={hero.id}>
+                <div>
+                  <img src={`${baseUrl}${hero.img}`} alt={hero.localized_name}/>
+                  <p>{hero.localized_name}</p>
+                </div>
+              </div>))}
         </div>
       </div>
     </>

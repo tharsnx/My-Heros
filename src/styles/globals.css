@@ -1,16 +1,16 @@
 body {
   position: relative;
-  background-image: url("../Image/herospageBG.jpg");
+  background-image: url("/Image/herospageBG.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed; /* ทำให้พื้นหลังไม่เลื่อน */
-  height: 100vh;
+  height: 100%;
   margin: 0;
   overflow-y: auto;
 }
 
 body::after {
-  content: "";
+  content: '';
   position: fixed; /* ใช้ fixed ให้อยู่ในตำแหน่งเดียวกับพื้นหลัง */
   top: 0;
   left: 0;
