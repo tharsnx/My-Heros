@@ -1,4 +1,5 @@
 import React from "react";
+import HeroImage from "./heroImage";
 
 export async function getServerSideProps() {
   const response = await fetch('https://api.opendota.com/api/heroes');
@@ -14,7 +15,7 @@ export async function getServerSideProps() {
 export default function Home({ heroes }) {
   return (
     <div>
-      <h1>List of Dota 2 Heroes</h1>
+      <h1>List of Dota 2 Heroes!!</h1>
       <ul>
         {heroes.map((hero) => (
           <li key={hero.id}>
@@ -22,6 +23,7 @@ export default function Home({ heroes }) {
           </li>
         ))}
       </ul>
+      <HeroImage/>
     </div>
   );
 }

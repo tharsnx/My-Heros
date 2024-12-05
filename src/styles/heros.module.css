@@ -1,0 +1,48 @@
+.pageContainer {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  padding-top: 2%;
+}
+
+.text {
+  font-size: 12ch;
+  line-height: 0.1;
+}
+
+.filter {
+  border: 0.5cap solid wheat;
+  padding: 10px;
+  margin: 0% 10% 10px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 10px;
+  margin: 0% 10%;
+  padding-bottom: 20px;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-size: large;
+  padding-bottom: 10;
+  text-align: center;
+  color: white;
+  overflow: hidden; /* ให้รูปภาพไม่เกินขอบของ card */
+}
+
+.card img {
+  width: 100%; /* ทำให้ภาพกว้างเต็มที่ */
+  height: 100%; /* ทำให้ภาพสูงเต็มที่ */
+  object-fit: cover; /* ใช้ cover เพื่อให้ภาพเต็มพื้นที่ของ card */
+  border-radius: 4px;
+  filter: grayscale(0.1) brightness(0.6); /* กำหนดค่าภาพหม่นและความสว่าง */
+}
+
+.card img:hover {
+  filter: grayscale(0) brightness(1); /* เปลี่ยนค่าเมื่อ hover: ให้ภาพสดใสขึ้น */
+}
