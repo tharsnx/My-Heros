@@ -1,0 +1,96 @@
+.content {
+  display: grid;
+  color: antiquewhite;
+  grid-template-columns: 1fr 1fr;
+}
+
+.heroImage img{
+  margin: 10% 0%;
+  width: 40vw;
+  height: 45vh;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.heroName{
+  margin: 5% 20%;
+  color: antiquewhite;
+}
+
+.name{
+  /* margin: 5%; */
+  margin-top: -30px;
+  font-size: 96px;
+}
+
+.attribute{
+  display: flex;
+  align-items: center;
+  margin: 0%;
+  padding: 0%;
+}
+
+.attribute p{
+  font-size: 36px;
+  margin-left: 20px;
+}
+
+.attribute img{
+  width: 50px;
+  height:50px;
+}
+
+
+.buttonContainer {
+  position: fixed;
+  width: 100vw;
+  /* max-width: 30%; */
+  top:85%;
+  bottom: 0;
+  display:flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.buttonContainer button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #eee4;
+  border: none;
+  font-weight: bold;
+  font-size: large;
+  color: antiquewhite;
+  transition: 0.5s;
+  position: relative; /* Required to position the icon inside the button */
+}
+
+.buttonContainer button:hover {
+  background-color: #eee;
+  color: #555;
+  transition: 0.5s;
+}
+
+.buttonContainer .icon{
+  margin: 20px;
+  width: 30%;
+  height: 30%;
+  transition: opacity 0.3s ease;
+}
+
+.preButton {
+  margin-left: 50px;
+}
+
+.nextButton {
+  margin-right: 50px;
+}
+
+.stats{
+  margin: -4% 10%;
+  width: 80vw;
+  height: 40vh;
+  background-color: #181818a7;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}

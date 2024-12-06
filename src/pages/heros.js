@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import styles from "../styles/heros.module.css";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps() {
   const response = await fetch("https://api.opendota.com/api/heroStats");
@@ -18,6 +19,7 @@ export default function Heros({ heroesstate }) {
   const [attribute, setAttribute] = useState("");
   const [name, setName] = useState("");
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const router = useRouter();
 
   const handleFilterClick = (filter) => {
     setIsTransitioning(true);
@@ -29,6 +31,10 @@ export default function Heros({ heroesstate }) {
       }
     }, 400);
     console.log("Filter clicked:", filter, "Current attribute:", attribute); // For debugging
+  };
+
+  const handleCardClick = (heroName) => {
+    router.push(`/herodetail/${heroName}`);
   };
 
   useEffect(() => {
@@ -50,7 +56,7 @@ export default function Heros({ heroesstate }) {
           <div className={styles.attributeContainer}>
             <pre>ATTRIBUTE:</pre>
             <img src="../Image/hero_strength.png" alt="Strength" onClick={() => handleFilterClick("str")}/>
-            <img src="../Image/hero_agility.jpg" alt="Agility" onClick={() => handleFilterClick("agi")}/>
+            <img src="../Image/hero_agility.png" alt="Agility" onClick={() => handleFilterClick("agi")}/>
             <img src="../Image/hero_intelligence.png" alt="Intelligence" onClick={() => handleFilterClick("int")}/>
             <img src="../Image/hero_universal.png" alt="Universal" onClick={() => handleFilterClick("universal")}/>
           </div>
@@ -79,7 +85,7 @@ export default function Heros({ heroesstate }) {
             }
             return true;})
             .map((hero) => (
-              <div className={styles.card} key={hero.id}>
+              <div className={styles.card} key={hero.id} onClick={() => handleCardClick(hero.localized_name)}>
                 <div>
                   <img src={`${baseUrl}${hero.img}`} alt={hero.localized_name}/>
                   <p>{hero.localized_name}</p>

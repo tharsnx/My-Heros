@@ -16,6 +16,6 @@ body::after {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* ทำให้พื้นหลังทึบ */
+  background: rgba(0, 0, 0, 0.7); /* ทำให้พื้นหลังทึบ */
   z-index: -1; /* ให้อยู่หลังเนื้อหาหลัก */
 }
