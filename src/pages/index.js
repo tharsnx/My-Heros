@@ -1,5 +1,6 @@
 import React from "react";
 import HeroImage from "./heroImage";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export async function getServerSideProps() {
   const response = await fetch('https://api.opendota.com/api/heroes');

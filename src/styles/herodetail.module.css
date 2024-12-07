@@ -1,3 +1,23 @@
+.favorit {
+  position: absolute;
+  right: 4%;
+  top: -10px;
+}
+
+.favorit .bookmark {
+  color: #eac017;
+  font-size: 7rem;
+  position: relative;
+}
+
+.favorit .heart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+}
+
 .content {
   display: grid;
   color: antiquewhite;
@@ -18,9 +38,9 @@
 }
 
 .name{
-  /* margin: 5%; */
+  margin-bottom:5%;
   margin-top: -30px;
-  font-size: 96px;
+  font-size: 72px;
 }
 
 .attribute{
@@ -44,15 +64,26 @@
 .buttonContainer {
   position: fixed;
   width: 100vw;
-  /* max-width: 30%; */
   top:85%;
   bottom: 0;
   display:flex;
   gap: 10px;
+}
+
+.buttonContainer.left {
+  justify-content: flex-start;
+}
+
+.buttonContainer.right {
+  justify-content: flex-end;
+}
+
+.buttonContainer.both {
   justify-content: space-between;
 }
 
 .buttonContainer button {
+  pointer-events: auto;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -62,7 +93,7 @@
   font-size: large;
   color: antiquewhite;
   transition: 0.5s;
-  position: relative; /* Required to position the icon inside the button */
+  position: relative;
 }
 
 .buttonContainer button:hover {
@@ -85,11 +116,10 @@
 .nextButton {
   margin-right: 50px;
 }
-
 .stats{
   margin: -4% 10%;
   width: 80vw;
-  height: 40vh;
+  height: 35vh;
   background-color: #181818a7;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

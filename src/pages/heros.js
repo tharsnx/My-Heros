@@ -37,6 +37,14 @@ export default function Heros({ heroesstate }) {
     router.push(`/herodetail/${heroName}`);
   };
 
+  const isFavorite = (heroName) => {
+    if (typeof window !== 'undefined') {
+      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      return favorites.includes(heroName);
+    }
+    return false;
+  };
+
   useEffect(() => {
     if (isTransitioning) {
       setTimeout(() => setIsTransitioning(false), 400);
@@ -86,6 +94,7 @@ export default function Heros({ heroesstate }) {
             return true;})
             .map((hero) => (
               <div className={styles.card} key={hero.id} onClick={() => handleCardClick(hero.localized_name)}>
+                {isFavorite(hero.localized_name)? <i className={`fa-solid fa-bookmark ${styles.bookmark}`}></i>:null} 
                 <div>
                   <img src={`${baseUrl}${hero.img}`} alt={hero.localized_name}/>
                   <p>{hero.localized_name}</p>
