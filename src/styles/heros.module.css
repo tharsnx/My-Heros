@@ -35,7 +35,7 @@
 .content {
   display: grid;
   grid-template-columns: repeat(auto-fit, 270px);
-  gap: 80px;
+  gap: 40px;
   margin: 0% 10%;
   padding-bottom: 20px;
   opacity: 1;
