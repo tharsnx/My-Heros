@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=adminDB
+      - DB_PASSWORD=adminDB
+      - DB_NAME=database_dota
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app
+    command: npm run dev
+
+  frontend:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    command: |
+      sh -c "npm run build && npm run dev"  # เพิ่มการ build ก่อนที่รันแอป
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: adminDB
+      POSTGRES_PASSWORD: adminDB
+      POSTGRES_DB: database_dota
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
