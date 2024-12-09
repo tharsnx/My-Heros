@@ -16,14 +16,12 @@ services:
       - postgres
     volumes:
       - ./backend:/app
-    command: npm run dev
 
   frontend:
     build:
-      context: .
+      context: ./frontend
     ports:
       - "3000:3000"
-    command: npm run dev
 
   postgres:
     image: postgres:13
