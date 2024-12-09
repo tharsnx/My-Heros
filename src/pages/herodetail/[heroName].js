@@ -73,20 +73,57 @@ export default function HeroDetail({ heroData, pre, next }) {
     }
   };
   
-  const handleFavorit = (heroName) => {
-    if (typeof window !== 'undefined') {
-      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-      if (favorites.includes(heroName)) {
-        const updatedFavorites = favorites.filter((name) => name !== heroName);
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-      } else {
-        favorites.push(heroName);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
+  const handleFavorit = async (heroName) => {
+    if (typeof window === 'undefined') return;
+  
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  
+    if (favorites.includes(heroName)) {
+      // ลบ heroName ออกจาก Favorites
+      try {
+        const response = await fetch('http://localhost:5000/api/deletenub', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ heroName }),
+        });
+  
+        if (response.ok) {
+          const updatedFavorites = favorites.filter((name) => name !== heroName);
+          localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+        } else {
+          console.error('Failed to decrement nub:', await response.json());
+        }
+      } catch (error) {
+        console.error('Error while decrementing nub:', error.message);
+      }
+    } else {
+      // เพิ่ม heroName เข้า Favorites
+      try {
+        const response = await fetch('http://localhost:5000/api/addnub', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ heroName }),
+        });
+  
+        if (response.ok) {
+          favorites.push(heroName);
+          localStorage.setItem('favorites', JSON.stringify(favorites));
+        } else {
+          console.error('Failed to increment nub:', await response.json());
+        }
+      } catch (error) {
+        console.error('Error while incrementing nub:', error.message);
       }
     }
     logFavorites();
-    setFavorit(isFavorite(heroData.localized_name));
+    setFavorit(isFavorite(heroName));
   };
+  
+  
 
   return (
     <>

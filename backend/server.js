@@ -71,14 +71,9 @@ Admin.beforeCreate(async (user) => {
   user.password = hashedPassword;
 });
 
-sequelize.drop()
-  .then(() => {
-    // Sync โมเดลกับฐานข้อมูล (สร้างตารางหากยังไม่มี)
-    return sequelize.sync();
-  })
-  .then(() => {
+sequelize.sync().then(() => {
     console.log("Hero table created successfully");
-
+    seedAdmin();
     // แสดงชื่อของตารางทั้งหมด
     return sequelize.getQueryInterface().showAllTables();
   })
@@ -96,7 +91,7 @@ const seedAdmin = async () => {
   }
 };
 
-app.get("/api/heroes/nub", async (req, res) => {
+app.get("/api/heroes", async (req, res) => {
   try {
     const heroes = await Board.findAll();
     console.log(heroes);
@@ -113,13 +108,15 @@ app.get("/api/heroes/nub", async (req, res) => {
 
 app.post("/api/addnub", async (req, res) => {
   const { heroName } = req.body;
+  if (!heroName) {
+    return res.status(400).json({ message: "heroName is required" });
+  }
+
   console.log(heroName);
-  const heroes = await Board.findAll();
-  console.log(heroes.length);
   let hero = await Board.findOne({ where: { name: heroName } });
-  
+
   if (!hero) {
-    hero = await Hero.create({
+    hero = await Board.create({
       name: heroName,
       nub: 1,
       time: new Date(),
@@ -127,11 +124,14 @@ app.post("/api/addnub", async (req, res) => {
     console.log(hero);
     return res.status(201).json({ message: 'Hero created and nub initialized', hero });
   }
+
   hero.nub += 1;
   hero.time = new Date();
   await hero.save();
   console.log(hero);
+  return res.status(200).json({ message: 'nub incremented', hero });
 });
+
 
 app.post("/api/deletenub", async (req, res) => {
   const { heroName } = req.body;
